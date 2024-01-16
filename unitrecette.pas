@@ -120,7 +120,7 @@ var
   i : integer; //Variable de boucle
 begin
   //Initailisation
-  EstFaisable := false;
+  EstFaisable := true;
 
   //On teste si le joueur possède les ingrédients
   for i := 1 to 3 do

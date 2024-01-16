@@ -90,7 +90,7 @@ begin
   listeRecettes[3].ingredients[2] := NouveauIngredient(CELERI,2);
 end;
 
-//Renvoie le nombre de recettes existantes
+// Renvoie le nombre de recettes existantes
 function GetNombreRecettes() : integer;
 begin
   GetNombreRecettes := Length(listeRecettes);

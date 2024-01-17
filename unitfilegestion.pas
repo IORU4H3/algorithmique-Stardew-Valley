@@ -8,13 +8,14 @@ unit UnitFileGestion;
 interface
 
 uses
-  Classes, SysUtils, UnitPersonnage, UnitGestionTemps;
+  Classes, SysUtils, UnitPersonnage, UnitGestionTemps, UnitDeplacement;
 
 type
   ListeRecettes = array of string;
 
 function LireFichier(NomFichier: string): ListeRecettes; // fonction lire fichier txt
 procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate); // procedure écrire dans fichier txt
+function FichierVide(NomFichier: string): boolean;   // fonction pour savoir si un fichier est vide ou pas
 
 
 implementation
@@ -52,6 +53,7 @@ procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; dat
 var
   fichier: TextFile;
 begin
+
   AssignFile(fichier, NomFichier); // on associe le fichier txt à la variable "fichier"
 
   rewrite(fichier); // on ouvre le fichier en écriture
@@ -71,6 +73,26 @@ begin
   writeln(fichier, inttostr(date.annee));
 
   closefile(fichier); // on ferme le fichier après utilisation
+end;
+
+
+function FichierVide(NomFichier: string): boolean;
+var
+  fichier: TextFile;
+  ligne: string;
+begin
+
+  ligne := '';
+  assign(fichier, NomFichier);
+  reset(fichier);
+
+  while not EOF(fichier) do
+    begin
+      readln(fichier, ligne);
+      ligne := ligne + ligne;
+    end;
+
+  FichierVide := (ligne = '11');
 end;
 
 end.

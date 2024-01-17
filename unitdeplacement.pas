@@ -6,7 +6,7 @@ unit UnitDeplacement;
 interface
 //------------------------------- TYPES ----------------------------------------
 //Les principaux différents lieux
-Type TLieu = (MENU,MAISON,JARDIN,MAGASIN,EVANOUIR,EXIT, CUISINE);
+Type TLieu = (MENU,MAISON,JARDIN,MAGASIN,EVANOUIR,EXIT, CUISINE, SAVE);
 
 
 //-------------------------- SOUS PROGRAMMES -----------------------------------
@@ -30,6 +30,7 @@ uses
 function SeRendreA(lieu : TLieu) : TLieu;
 begin
      case(lieu) of
+          SAVE: SeRendreA := UnitMenuIHM.EcranSauver();
           MENU: SeRendreA := UnitMenuIHM.EcranMenuDemarrage();
           MAISON: SeRendreA := UnitMaisonIHM.EcranMaison();
           JARDIN: SeRendreA := UnitFermeIHM.EcranFerme();

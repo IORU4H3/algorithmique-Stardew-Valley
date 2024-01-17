@@ -5,12 +5,14 @@ unit UnitMenuIHM;
 
 interface
 uses
-  UnitDeplacement, UnitFileGestion;
+  UnitDeplacement, UnitFileGestion, SysUtils;
 
 //-------------------------- SOUS PROGRAMMES -----------------------------------
 //Menu de démarrage
 //sortie : le lieu suivant
 function EcranMenuDemarrage() : TLieu;
+function RestaurerPartie(): Tlieu;   // quand on a une sauvegarde, on restaure notre jeu
+function EcranSauver() : TLieu;
 
 
 
@@ -69,6 +71,63 @@ begin
   NouvellePartie := MAISON;
 end;
 
+// fonction à part qui gère la sauvegarde après avoir joué
+function EcranSauver() : TLieu;
+begin
+  effacerEcran();
+
+  // on gére la sauvegarde lorsque l'on sort du jeu...
+  EcrireFichier('sauvegarde.txt', GetNomPersonnage(), GetNomFerme(), GetStamina(), GetDate());
+
+  deplacerCurseurXY(90,20);writeln('La partie a été sauvegardé :)');
+  deplacerCurseurXY(90,21);writeln('    Appuyez sur ENTRER...    ');
+  readln;
+
+  EcranSauver := EcranMenuDemarrage;
+end;
+
+function RestaurerPartie(): Tlieu;
+var
+  c : array of string;
+  j : TJour;
+  s : TSaison;
+begin
+
+  c := LireFichier('sauvegarde.txt');
+
+  SetNomPersonnage(c[0]);
+  SetNomFerme(c[1]);
+  SetStamina(strtoint(c[2]));
+
+
+  case c[5] of
+    'LUNDI': j := LUNDI;
+    'MARDI': j := MARDI;
+    'MERCREDI': j := MERCREDI;
+    'JEUDI': j := JEUDI;
+    'VENDREDI': j := VENDREDI;
+    'SAMEDI': j := SAMEDI;
+    'DIMANCHE': j := DIMANCHE;
+  end;
+
+  case c[7] of
+    'PRINTEMPS': s := PRINTEMPS;
+    'ETE': s := ETE;
+    'AUTOMNE': s := AUTOMNE;
+    'HIVERS': s := HIVERS;
+  end;
+
+  SetDate(strtoint(c[3]), strtoint(c[4]), strtoint(c[6]), strtoint(c[8]), j, s);
+
+
+
+  InitJardin();                      //Le jardin
+  InitRecettes();                    //Les recettes
+
+  RestaurerPartie := MAISON;
+end;
+
+
 //Affiche le logo
 procedure Logo();
 var
@@ -112,27 +171,26 @@ var
   choix : integer; //Choix pour le menu
 begin
   choix := -1;
-  while (choix <> 0) AND (choix <> 1) do
+  while (choix <> 0) AND (choix <> 1) AND (choix <> 2) do
   begin
     //Fixe la taille de la fenetre
     GestionEcran.changerTailleConsole(199,50);
     //Efface l'écran
     effacerEcran();
 
-    // sauvegarder la partie
-    // on entre le nom du fichier, le nom du perso, de la ferme, la stamina et la date. Cela le sauvegarde dans un fichier
-    EcrireFichier('sauvegarde.txt', GetNomPersonnage(), GetNomFerme(), GetStamina(), GetDate());
-
     //Affiche le titre
     Logo();
     //Menu
+
     deplacerCurseurXY(75,38);writeln('1 - Nouvelle partie');
-    deplacerCurseurXY(75,39);writeln('0 - Quitter');
-    deplacerCurseurXY(75,40);readln(choix);
+    deplacerCurseurXY(75,39);writeln('2 - Charger partie');
+    deplacerCurseurXY(75,40);writeln('0 - Quitter');
+    deplacerCurseurXY(75,41);readln(choix);
 
     case(choix) of
       0 : EcranMenuDemarrage := EXIT;
       1 : EcranMenuDemarrage := NouvellePartie;
+      2 : EcranMenuDemarrage := RestaurerPartie;
     end;
   end;
 end;

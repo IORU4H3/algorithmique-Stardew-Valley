@@ -19,6 +19,10 @@ function GetNomFerme() : string;
 //entrée : le nouveau nom de la ferme
 procedure SetNomFerme(nom : string);
 
+//Change le niveau de stamina
+//entrée : le nouvelle valeur de stamina
+procedure SetStamina(value: integer);
+
 //Renvoie l'endurance du joueur
 function GetStamina() : integer;   
 //Renvoie le maximum d'endurance possible pour le personnage
@@ -160,6 +164,11 @@ begin
      nomFerme := 'La Ferme';
      stamina := STAMINAMAX;
      argent := 200;
+end;
+
+procedure SetStamina(value: integer);
+begin
+  stamina :=  value;
 end;
 
 end.

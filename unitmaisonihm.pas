@@ -142,7 +142,7 @@ begin
 
        //Exécution du choix
        case(choix) of
-           -1: EcranMaison := MENU;           //Si le joueur veut revenir au menu principal
+           -1: EcranMaison := SAVE;           //Si le joueur veut revenir au menu principal
            0: EcranMaison := JARDIN;          //Si le joueur veut sortir de la maison
            1: EcranMaison := Dormir();        //Si le joueur veut dormir
            2: EcranMaison := TV();            //Si le joueur regarde la TV

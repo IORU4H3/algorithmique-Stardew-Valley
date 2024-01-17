@@ -41,6 +41,9 @@ function SaisonToString(saison : TSaison) : string;
 //Initialisation de la date
 procedure InitDate();
 
+// initialise la date donnée en entrée:
+procedure SetDate(min, heu, numero, ann: integer; jou: TJour; sai: TSaison);
+
 //Passe au jour suivant 06h00 lors d'un passage de jours
 procedure JourSuivant();
 
@@ -126,7 +129,22 @@ begin
   if(jour <> DIMANCHE) then JourSuivant := succ(jour)
   else JourSuivant := LUNDI;
 end;
-    
+
+
+procedure SetDate(min, heu, numero, ann: integer; jou: TJour; sai: TSaison);
+begin
+
+      date.minutes := min;     //Minutes (00->59)
+      date.heures := heu;      //Heures (0->23)
+      date.jour := jou;          //Jour de la semaine
+      date.num := numero;         //Numéro du jour (1-> 28)
+      date.saison := sai;      //Saison
+      date.annee := ann;       //Numéro de l'année
+
+end;
+
+
+
 //Détermine la saison suivante
 //entrée : la saison dont on veut la suivante
 //sortie : la saison suivant celle donnée en entrée

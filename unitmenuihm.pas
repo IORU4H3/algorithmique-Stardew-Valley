@@ -5,7 +5,7 @@ unit UnitMenuIHM;
 
 interface
 uses
-  UnitDeplacement;
+  UnitDeplacement, UnitFileGestion;
 
 //-------------------------- SOUS PROGRAMMES -----------------------------------
 //Menu de démarrage
@@ -118,6 +118,10 @@ begin
     GestionEcran.changerTailleConsole(199,50);
     //Efface l'écran
     effacerEcran();
+
+    // sauvegarder la partie
+    // on entre le nom du fichier, le nom du perso, de la ferme, la stamina et la date. Cela le sauvegarde dans un fichier
+    EcrireFichier('sauvegarde.txt', GetNomPersonnage(), GetNomFerme(), GetStamina(), GetDate());
 
     //Affiche le titre
     Logo();

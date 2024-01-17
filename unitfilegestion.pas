@@ -8,13 +8,13 @@ unit UnitFileGestion;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, UnitPersonnage, UnitGestionTemps;
 
 type
   ListeRecettes = array of string;
 
 function LireFichier(NomFichier: string): ListeRecettes; // fonction lire fichier txt
-procedure EcrireFichier(NomFichier, Nom, NomFerme, Stamina, Date: string); // procedure écrire dans fichier txt
+procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate); // procedure écrire dans fichier txt
 
 
 implementation
@@ -47,7 +47,8 @@ end;
 
 
 // La procédure crée ou ÉCRASE le fichier txt (sauvegarde.txt) et écrit les informations essentielles rentrées en paramètre.
-procedure EcrireFichier(NomFichier, Nom, NomFerme, Stamina, Date: string);
+
+procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate);
 var
   fichier: TextFile;
 begin
@@ -57,8 +58,17 @@ begin
 
   writeln(fichier, Nom); // on écrit le nom et on saute une ligne
   writeln(fichier, NomFerme);
-  writeln(fichier, Stamina);
-  writeln(fichier, Date);
+
+  writeln(fichier, inttostr(Stamina));
+
+
+
+  writeln(fichier, inttostr(date.minutes));
+  writeln(fichier, inttostr(date.heures));
+  writeln(fichier, date.jour);
+  writeln(fichier, inttostr(date.num));
+  writeln(fichier, date.saison);
+  writeln(fichier, inttostr(date.annee));
 
   closefile(fichier); // on ferme le fichier après utilisation
 end;

@@ -8,12 +8,10 @@ unit UnitFileGestion;
 interface
 
 uses
-  Classes, SysUtils, UnitPersonnage, UnitGestionTemps, UnitDeplacement;
+  Classes, SysUtils, UnitPersonnage, UnitGestionTemps, UnitDeplacement, UnitTri;
 
-type
-  ListeRecettes = array of string;
 
-function LireFichier(NomFichier: string): ListeRecettes; // fonction lire fichier txt, retourne array of string
+function LireFichier(NomFichier: string): strTab; // fonction lire fichier txt
 procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate); // procedure écrire dans fichier txt
 function FichierVide(NomFichier: string): boolean;   // fonction pour savoir si un fichier est vide ou pas
 
@@ -21,11 +19,11 @@ function FichierVide(NomFichier: string): boolean;   // fonction pour savoir si 
 implementation
 // La fonction lit un fichier txt (recettes.txt) dont le chemin est spécifié en paramètre.
 // Elle retourne un tableau de string où chaque élément correspond à une ligne du fichier txt.
-function LireFichier(NomFichier: string): ListeRecettes;
+function LireFichier(NomFichier: string): strTab;
 var
   fichier: TextFile;
   Line: string;
-  Str: ListeRecettes;
+  Str: strTab;
 begin
   Line := '';
   // on associe le fichier txt à la variable "fichier"
@@ -48,6 +46,7 @@ end;
 
 
 // La procédure crée ou ÉCRASE le fichier txt (sauvegarde.txt) et écrit les informations essentielles rentrées en paramètre.
+
 procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate);
 var
   fichier: TextFile;
@@ -74,7 +73,7 @@ begin
   closefile(fichier); // on ferme le fichier après utilisation
 end;
 
-// fonction qui renvoie true ou false si un ficher est vide ou non.
+
 function FichierVide(NomFichier: string): boolean;
 var
   fichier: TextFile;
@@ -85,14 +84,16 @@ begin
   assign(fichier, NomFichier);
   reset(fichier);
 
-  while not EOF(fichier) do   // on parcourt le fichier pour voir s'il contient des choses
+  while not EOF(fichier) do
     begin
       readln(fichier, ligne);
       ligne := ligne + ligne;
     end;
 
-  FichierVide := (ligne = ''); // cette ligne renvoie true ou false en fonction de la condition
+  FichierVide := (ligne = '11');
 end;
+
+
 
 end.
 

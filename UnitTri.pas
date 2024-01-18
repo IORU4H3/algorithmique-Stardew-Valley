@@ -8,20 +8,20 @@ uses
 
 type
   // Type de tableau de chaînes de caractères
-  ListeRecettes = array of string;
+  strTab = array of string;
 
 // Fusion de deux tableaux triés de chaînes de caractères
-function fusion(gauche: ListeRecettes; droite: ListeRecettes): ListeRecettes;
+function fusion(gauche: strTab; droite: strTab): strTab;
 
 // Renvoie du tableau trié de chaînes de caractères
-function tri_fusion(t: ListeRecettes): ListeRecettes;
+function tri_fusion(t: strTab): strTab;
 
 implementation
 
-function fusion(gauche: ListeRecettes; droite: ListeRecettes): ListeRecettes;
+function fusion(gauche: strTab; droite: strTab): strTab;
 var
   // Tableau à renvoyer (concaténation des deux précédents)
-  t: ListeRecettes;
+  t: strTab;
   // Variable de travail
   i: integer;
 begin
@@ -52,10 +52,10 @@ begin
   Result := t;
 end;
 
-function tri_fusion(t: ListeRecettes): ListeRecettes;
+function tri_fusion(t: strTab): strTab;
 var
   // Tableau à renvoyer à la fin de la fonction
-  tempt, gauche, droite: ListeRecettes;  // Variables de travail
+  tempt, gauche, droite: strTab;  // Variables de travail
   m, i: integer;   // Indique le milieu du tableau
 begin
   m := Length(t) div 2;

@@ -4,7 +4,7 @@ unit UnitRecette;
 {$mode ObjFPC}{$H+}
 interface
 uses
-  UnitObjet;
+  SysUtils, UnitObjet, UnitFileGestion, UnitTri;
 
 //------------------------------- TYPES ----------------------------------------
 Type
@@ -25,7 +25,7 @@ Type
   end;
 
   //Un tableau de 3 recettes
-  TTableauDeRecettes = array[1..3] of TRecette;
+  TTableauDeRecettes = array of TRecette;
 //-------------------------- SOUS PROGRAMMES -----------------------------------
 //Initialisation des recettes
 procedure InitRecettes();
@@ -44,7 +44,7 @@ function GetNombreRecettes() : integer;
 
 implementation
 
-uses SysUtils,UnitInventaire,UnitPersonnage;
+uses UnitInventaire,UnitPersonnage;
 
 var
   //Le tableau des recettes
@@ -77,8 +77,20 @@ end;
 
 //Initialisation des recettes
 procedure InitRecettes();
+var
+  //variables de travail//
+  i: integer;
+  temp: Array of String;
+
+  //liste de recettes du fichier texte//
+  tab: strTab;
+
 begin
-  listeRecettes[1] := NouvelleRecette('Saute de Panais',10);
+  //Définition de la taille du tableau de recettes(trié)//
+  tab:= tri_fusion(LireFichier('Recettes.txt'));
+  setlength (listeRecettes, length(tab)+1);
+
+  {listeRecettes[1] := NouvelleRecette('Saute de Panais',10);
   listeRecettes[1].ingredients[1] := NouveauIngredient(PANAIS,1);
 
   listeRecettes[2] := NouvelleRecette('Mijote de Tomate et Choux fleur',30);
@@ -87,7 +99,26 @@ begin
 
   listeRecettes[3] := NouvelleRecette('Salade de Carottes et Celeri',40);
   listeRecettes[3].ingredients[1] := NouveauIngredient(CAROTTE,2);
-  listeRecettes[3].ingredients[2] := NouveauIngredient(CELERI,2);
+  listeRecettes[3].ingredients[2] := NouveauIngredient(CELERI,2);}
+
+  //---incorporation du fichier texte---//
+  //parcours du tableau de string//
+  for i:= 0 to high (tab) do
+  begin
+     //séparation d'une ligne en un tableau de strings//
+     temp:= tab[i].split('/');
+     //ajout de la recette//
+     listeRecettes[i+1]:= NouvelleRecette(temp[0], strToInt(temp[high(temp)]));
+     //ajout du premier ingrédient//
+     listeRecettes[i+1].ingredients[1] := NouveauIngredient (strToObjet(temp[1]), strToInt(temp[2]));
+     //ajout du 2e ingrédient (si existant)//
+     if length(temp) > 4 then listeRecettes[i+1].ingredients[2] := NouveauIngredient (strToObjet(temp[3]), strToInt(temp[4]));
+     //ajout du 3e ingrédient (si existant)//
+     if length(temp) > 6 then listeRecettes[i+1].ingredients[3] := NouveauIngredient (strToObjet(temp[5]), strToInt(temp[6]));
+
+  end;
+
+
 end;
 
 // Renvoie le nombre de recettes existantes

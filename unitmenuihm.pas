@@ -182,6 +182,8 @@ begin
     Logo();
     //Menu
 
+    // FichierVide('sauvegarde.txt') 
+
     deplacerCurseurXY(75,38);writeln('1 - Nouvelle partie');
     deplacerCurseurXY(75,39);writeln('2 - Charger partie');
     deplacerCurseurXY(75,40);writeln('0 - Quitter');

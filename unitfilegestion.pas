@@ -13,7 +13,7 @@ uses
 type
   ListeRecettes = array of string;
 
-function LireFichier(NomFichier: string): ListeRecettes; // fonction lire fichier txt
+function LireFichier(NomFichier: string): ListeRecettes; // fonction lire fichier txt, retourne array of string
 procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate); // procedure écrire dans fichier txt
 function FichierVide(NomFichier: string): boolean;   // fonction pour savoir si un fichier est vide ou pas
 
@@ -48,7 +48,6 @@ end;
 
 
 // La procédure crée ou ÉCRASE le fichier txt (sauvegarde.txt) et écrit les informations essentielles rentrées en paramètre.
-
 procedure EcrireFichier(NomFichier, Nom, NomFerme: string; stamina: integer; date: TDate);
 var
   fichier: TextFile;
@@ -75,7 +74,7 @@ begin
   closefile(fichier); // on ferme le fichier après utilisation
 end;
 
-
+// fonction qui renvoie true ou false si un ficher est vide ou non.
 function FichierVide(NomFichier: string): boolean;
 var
   fichier: TextFile;
@@ -86,13 +85,13 @@ begin
   assign(fichier, NomFichier);
   reset(fichier);
 
-  while not EOF(fichier) do
+  while not EOF(fichier) do   // on parcourt le fichier pour voir s'il contient des choses
     begin
       readln(fichier, ligne);
       ligne := ligne + ligne;
     end;
 
-  FichierVide := (ligne = '11');
+  FichierVide := (ligne = ''); // cette ligne renvoie true ou false en fonction de la condition
 end;
 
 end.

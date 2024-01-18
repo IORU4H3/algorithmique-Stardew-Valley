@@ -56,7 +56,10 @@ function PrixVente(objet : TObjet ; qualite : TQualite) : integer;
 //sortie : est-ce une graine
 function EstGraineObjet(objet : TObjet) : boolean;
 
-
+//Transforme un string en TObjet
+//entrée : le string
+//sortie : le TObjet correspondant
+function StrToObjet(s: string) : TObjet;
 
 
 implementation
@@ -221,6 +224,28 @@ begin
       SILVER : QualiteToString := ' (+)';
       GOLD : QualiteToString := ' (++)';
       IRIDIUM : QualiteToString := ' (+++)';
+   end;
+end;
+
+//Transforme un string en TObjet
+//entrée : le string
+//sortie : le TObjet correspondant
+function StrToObjet(s: string) : TObjet;
+begin
+   case s of
+      'Panais' : StrToObjet := PANAIS;
+      'Pomme de terre' : StrToObjet := POMMEDETERRE;
+      'Choux-fleur' : StrToObjet := CHOUXFLEUR;
+      'Tomate' : StrToObjet := TOMATE;
+      'Piment' : StrToObjet := PIMENT;
+      'Melon' : StrToObjet := MELON;
+      'Aubergine' : StrToObjet := AUBERGINE;
+      'Citrouille' : StrToObjet := CITROUILLE;
+      'Igname' : StrToObjet := IGNAME;
+      'Carotte' : StrToObjet := CAROTTE;
+      'Poireau' : StrToObjet := POIREAU;
+      'Celeri' : StrToObjet := CELERI;
+      else StrToObjet:= VIDE;
    end;
 end;
 
